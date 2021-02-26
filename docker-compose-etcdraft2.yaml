@@ -1,0 +1,70 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.blockhealth.com:
+  orderer2.blockhealth.com:
+  orderer3.blockhealth.com:
+
+networks:
+  blockhealth:
+
+services:
+
+  orderer.blockhealth.com:
+    container_name: orderer.blockhealth.com
+    extends:
+      file: base/peer-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_GENERAL_LISTENPORT=7050
+    volumes:
+        - ./channel-artifacts/genesisRaft.block:/var/hyperledger/orderer/orderer.genesisRaft.block
+        - ./crypto-config/ordererOrganizations/blockhealth.com/orderers/orderer.blockhealth.com/msp:/var/hyperledger/orderer/msp
+        - ./crypto-config/ordererOrganizations/blockhealth.com/orderers/orderer.blockhealth.com/tls/:/var/hyperledger/orderer/tls
+        - orderer.blockhealth.com:/var/hyperledger/production/orderer
+    ports:
+    - 7050:7050
+    networks:
+    - blockhealth
+
+
+  orderer2.blockhealth.com:
+    container_name: orderer2.blockhealth.com
+    extends:
+      file: base/peer-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_GENERAL_LISTENPORT=8050
+    volumes:
+        - ./channel-artifacts/genesisRaft.block:/var/hyperledger/orderer/orderer.genesisRaft.block
+        - ./crypto-config/ordererOrganizations/blockhealth.com/orderers/orderer2.blockhealth.com/msp:/var/hyperledger/orderer/msp
+        - ./crypto-config/ordererOrganizations/blockhealth.com/orderers/orderer2.blockhealth.com/tls/:/var/hyperledger/orderer/tls
+        - orderer2.blockhealth.com:/var/hyperledger/production/orderer
+    ports:
+    - 8050:8050
+    networks:
+    - blockhealth
+
+
+  orderer3.blockhealth.com:
+    container_name: orderer3.blockhealth.com
+    extends:
+      file: base/peer-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_GENERAL_LISTENPORT=9050
+    volumes:
+        - ./channel-artifacts/genesisRaft.block:/var/hyperledger/orderer/orderer.genesisRaft.block
+        - ./crypto-config/ordererOrganizations/blockhealth.com/orderers/orderer3.blockhealth.com/msp:/var/hyperledger/orderer/msp
+        - ./crypto-config/ordererOrganizations/blockhealth.com/orderers/orderer3.blockhealth.com/tls/:/var/hyperledger/orderer/tls
+        - orderer3.blockhealth.com:/var/hyperledger/production/orderer
+    ports:
+    - 9050:9050
+    networks:
+    - blockhealth
+

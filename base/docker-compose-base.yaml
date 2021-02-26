@@ -1,0 +1,76 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+
+
+  peer0.companyA.blockhealth.com:
+    container_name: peer0.companyA.blockhealth.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.companyA.blockhealth.com
+      - CORE_PEER_ADDRESS=peer0.companyA.blockhealth.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.companyA.blockhealth.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.companyA.blockhealth.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.companyA.blockhealth.com:7051
+      - CORE_PEER_LOCALMSPID=CompanyAMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/companyA.blockhealth.com/peers/peer0.companyA.blockhealth.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/companyA.blockhealth.com/peers/peer0.companyA.blockhealth.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.companyA.blockhealth.com:/var/hyperledger/production
+    ports:
+      - 7051:7051
+
+  peer0.companyB.blockhealth.com:
+    container_name: peer0.companyB.blockhealth.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.companyB.blockhealth.com
+      - CORE_PEER_ADDRESS=peer0.companyB.blockhealth.com:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.companyB.blockhealth.com:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.companyB.blockhealth.com:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.companyB.blockhealth.com:8051
+      - CORE_PEER_LOCALMSPID=CompanyBMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/companyB.blockhealth.com/peers/peer0.companyB.blockhealth.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/companyB.blockhealth.com/peers/peer0.companyB.blockhealth.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.companyB.blockhealth.com:/var/hyperledger/production
+    ports:
+      - 8051:8051
+
+  peer0.companyC.blockhealth.com:
+    container_name: peer0.companyC.blockhealth.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.companyC.blockhealth.com
+      - CORE_PEER_ADDRESS=peer0.companyC.blockhealth.com:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.companyC.blockhealth.com:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.companyC.blockhealth.com:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.companyC.blockhealth.com:9051
+      - CORE_PEER_LOCALMSPID=CompanyCMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/companyC.blockhealth.com/peers/peer0.companyC.blockhealth.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/companyC.blockhealth.com/peers/peer0.companyC.blockhealth.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.companyC.blockhealth.com:/var/hyperledger/production
+    ports:
+      - 9051:9051
+

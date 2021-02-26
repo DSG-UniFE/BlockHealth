@@ -1,0 +1,81 @@
+version: '2'
+
+volumes:
+
+  peer0.companyA.blockhealth.com:
+  peer0.companyB.blockhealth.com:
+  peer0.companyC.blockhealth.com:
+
+networks:
+  blockhealth:
+
+services:
+
+  peer0.companyA.blockhealth.com:
+    container_name: peer0.companyA.blockhealth.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.companyA.blockhealth.com
+    networks:
+      - blockhealth
+
+
+
+  peer0.companyB.blockhealth.com:
+    container_name: peer0.companyB.blockhealth.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.companyB.blockhealth.com
+    networks:
+      - blockhealth
+
+
+
+  peer0.companyC.blockhealth.com:
+    container_name: peer0.companyC.blockhealth.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.companyC.blockhealth.com
+    networks:
+      - blockhealth
+
+
+
+
+
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:$IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.companyA.blockhealth.com:7051
+      - CORE_PEER_LOCALMSPID=CompanyAMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/companyA.blockhealth.com/peers/peer0.companyA.blockhealth.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/companyA.blockhealth.com/peers/peer0.companyA.blockhealth.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/companyA.blockhealth.com/peers/peer0.companyA.blockhealth.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/companyA.blockhealth.com/users/Admin@companyA.blockhealth.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.blockhealth.com
+      - orderer2.blockhealth.com
+      - orderer3.blockhealth.com
+      - peer0.companyA.blockhealth.com
+      - peer0.companyB.blockhealth.com
+      - peer0.companyC.blockhealth.com
+    networks:
+      - blockhealth
