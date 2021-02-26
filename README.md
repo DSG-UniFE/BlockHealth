@@ -1,0 +1,2 @@
+# BlockHealth
+BlockHealth is a solution for active surveillance and sharing of personal health data with not only tamper proofing and data protection guarantees, but also privacy-preserving (data can only be accessed by legitimate staff and, if required, it can be also deleted).  To this purpose, BlockHealth does not insert in the Blockchain the health data, but rather only their secure hash. Actual health data must be exclusively stored in a private database owned by (and under the control of) each different actors.
