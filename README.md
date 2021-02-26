@@ -19,5 +19,5 @@ After that, you can run the network. You will notice that 3 peers and 3 CAs (one
 WARNING: We deployed the peers to three different servers each with an orderer.
 
 
-# Crate channel
+# Create channel
 
