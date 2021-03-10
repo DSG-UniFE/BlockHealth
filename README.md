@@ -76,3 +76,11 @@ $peer lifecycle chaincode commit -o orderer.blockhealth.com:7050 --channelID $CH
 Now you can invoke the chaincode.
 
 *WARNING: To resolve the logical host names, we configured the /etc/hosts file*
+
+
+
+# Scripts for tests
+
+In this folder there are several scripts. To test the network you need to use:
+* "**multiple_invoke_add_test.sh**" to create and add into blockchain the same test with 10 hash ten times, you can choose the TPS;
+* "**multiple_invoke_multi_hash.sh**" to create and add into blockchain nine different test with incremental hash number, it start with two hash.
