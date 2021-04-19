@@ -1,4 +1,4 @@
-chaincode/test/test.go
+
 
 scripts_for_tests/batchSize.sh
 scripts_for_tests/package.json
