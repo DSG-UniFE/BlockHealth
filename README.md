@@ -19,7 +19,7 @@ After that, you can run the network. You will notice that will be started one pe
 *WARNING: We deployed the peers to three different servers with an orderer on each.*
 
 
-# Crate channel
+# Create channel
 To create the channel, we used the CLI fabric-tool (latest version).
 
 For the following CLI commands against peer0.companyA.blockhealth.com CLI to work, you need to preface four environment variables given below. These informations are essential to indicate to the cli which peer it must connect.
